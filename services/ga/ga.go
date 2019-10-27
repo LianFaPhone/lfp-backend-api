@@ -3,9 +3,9 @@ package ga
 import (
 	"encoding/base64"
 	"github.com/dgryski/dgoogauth"
-	"rsc.io/qr"
 	"math/rand"
 	"net/url"
+	"rsc.io/qr"
 	"time"
 )
 

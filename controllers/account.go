@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/api-common"
 	"LianFaPhone/lfp-backend-api/services/account"
 	"LianFaPhone/lfp-backend-api/services/ga"
@@ -8,7 +9,6 @@ import (
 	l4g "github.com/alecthomas/log4go"
 	"github.com/asaskevich/govalidator"
 	"github.com/kataras/iris"
-	apibackend "LianFaPhone/lfp-api/errdef"
 )
 
 type Account struct {
@@ -373,7 +373,7 @@ func (this *Account) BatchUserByIds(ctx iris.Context) {
 	ctx.JSON(Response{Data: result})
 	l4g.Debug("deal BatchUserByIds username[%s] ok, result[%v]", utils.GetValueUserName(ctx), result)
 	ctx.Next()
-	}
+}
 
 func (this *Account) GetUserInfo(ctx iris.Context) {
 	l4g.Debug("start deal GetUserInfo username[%s]", utils.GetValueUserName(ctx))
@@ -406,7 +406,7 @@ func (this *Account) GetUserInfo(ctx iris.Context) {
 	ctx.JSON(Response{Data: result})
 	l4g.Debug("deal GetUserInfo username[%s] ok, result[%v]", utils.GetValueUserName(ctx), result)
 	ctx.Next()
-	}
+}
 
 func (this *Account) ChangeAfterPassword(ctx iris.Context) {
 	l4g.Debug("start deal ChangeAfterPassword username[%s]", utils.GetValueUserName(ctx))

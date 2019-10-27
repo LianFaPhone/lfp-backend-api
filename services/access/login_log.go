@@ -1,8 +1,8 @@
 package access
 
 import (
-	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/api-common"
+	"LianFaPhone/lfp-backend-api/models"
 )
 
 type (

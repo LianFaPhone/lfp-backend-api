@@ -1,8 +1,8 @@
 package common
 
 import (
-	"reflect"
 	"errors"
+	"reflect"
 )
 
 func Call(structs interface{}, methodName string, params ...interface{}) (result []reflect.Value, err error) {

@@ -1,15 +1,15 @@
 package controllers
 
 import (
-	"io/ioutil"
-	"github.com/kataras/iris"
-	"LianFaPhone/lfp-backend-api/tools"
-	"net/http"
-	"LianFaPhone/lfp-backend-api/api-common"
 	apibackend "LianFaPhone/lfp-api/errdef"
+	"LianFaPhone/lfp-backend-api/api-common"
+	"LianFaPhone/lfp-backend-api/tools"
 	"encoding/json"
 	"fmt"
 	"github.com/alecthomas/log4go"
+	"github.com/kataras/iris"
+	"io/ioutil"
+	"net/http"
 )
 
 func NewDownloadController(config *tools.Config) *DownloadController {
@@ -24,14 +24,14 @@ type DownloadController struct {
 }
 
 func (this *DownloadController) GetStatus(ctx iris.Context) {
-	if len(this.config.BasQuote.Addr) < 5 {//暂时把这个功能放在 quote-collect中
+	if len(this.config.BasQuote.Addr) < 5 { //暂时把这个功能放在 quote-collect中
 		log4go.Error("config not set, host[%s]", this.config.BasQuote.Addr)
 		ctx.JSON(common.NewErrorResponse(ctx, nil, "", apibackend.BASERR_INTERNAL_CONFIG_ERROR.Code()))
 		return
 	}
 
-	url := this.config.BasQuote.Addr + "/v1/filetransfer/status/get" +"?" + ctx.Request().URL.RawQuery
-	resp,err := http.Get(url)
+	url := this.config.BasQuote.Addr + "/v1/filetransfer/status/get" + "?" + ctx.Request().URL.RawQuery
+	resp, err := http.Get(url)
 	if err != nil {
 		log4go.Error("http get[%s] err[%s]", url, err.Error())
 		ctx.JSON(common.NewErrorResponse(ctx, nil, "", apibackend.BASERR_INTERNAL_CONFIG_ERROR.Code()))
@@ -62,15 +62,15 @@ func (this *DownloadController) GetStatus(ctx iris.Context) {
 	//	ctx.JSON(common.NewErrorResponse(ctx, nil, "", apibackend.BASERR_INTERNAL_SERVICE_ACCESS_ERROR.Code()))
 	//	return
 	//}
-	resMsg := &struct{
-		Code int `json:"code"`
+	resMsg := &struct {
+		Code    int    `json:"code"`
 		Message string `json:"message"`
-		Data struct{
+		Data    struct {
 			QueryID   string `json:"query_id"`
 			Status    int    `json:"status"`
 			Data      string `json:"data"`
 			UserParam string `json:"user_param,omitempty"`
-		}  `json:"data"`
+		} `json:"data"`
 	}{}
 
 	if err := json.Unmarshal(content, resMsg); err != nil {
@@ -80,7 +80,7 @@ func (this *DownloadController) GetStatus(ctx iris.Context) {
 	}
 	if resMsg.Code != 0 {
 		log4go.Error("download response code[%s][%v]", resMsg.Code, resMsg)
-		ctx.JSON(common.NewErrorResponse(ctx, nil, fmt.Sprintf("%d-%s",resMsg.Code, resMsg.Message), apibackend.BASERR_INTERNAL_SERVICE_ACCESS_ERROR.Code()))
+		ctx.JSON(common.NewErrorResponse(ctx, nil, fmt.Sprintf("%d-%s", resMsg.Code, resMsg.Message), apibackend.BASERR_INTERNAL_SERVICE_ACCESS_ERROR.Code()))
 		return
 	}
 

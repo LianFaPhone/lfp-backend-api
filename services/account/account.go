@@ -1,17 +1,17 @@
 package account
 
 import (
+	"LianFaPhone/lfp-backend-api/api-common"
 	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/models/redis"
 	"encoding/json"
-	"time"
-	"strings"
 	"errors"
-	"LianFaPhone/lfp-backend-api/api-common"
+	"strings"
+	"time"
 	//"LianFaPhone/lfp-backend-api/services/access"
-	"strconv"
-	"github.com/satori/go.uuid"
 	"fmt"
+	"github.com/satori/go.uuid"
+	"strconv"
 )
 
 const (
@@ -152,9 +152,9 @@ func (this *Account) Register(params *Account) (*models.Account, error) {
 	if err == nil {
 		if account.RoleId > 0 {
 			userRole := &models.UserRole{
-				UserId:account.Id,
-				RoleId:this.RoleId,
-				Model:models.Model{
+				UserId: account.Id,
+				RoleId: this.RoleId,
+				Model: models.Model{
 					CreatedAt: Tools.GetDateNowString(),
 					UpdatedAt: Tools.GetDateNowString(),
 				},
@@ -221,7 +221,7 @@ func (this *AccountUpdate) UpdateUserInfo() (*models.Account, error) {
 		user.Department = this.Department
 	}
 
-	if this.GoogleSecret !="" {
+	if this.GoogleSecret != "" {
 		user.GoogleSecret = this.GoogleSecret
 	}
 
@@ -555,8 +555,8 @@ func (c *ChangeAfterPassword) ChangeAfterPassword() bool {
 	rows := models.DB.Table(new(models.Account).TableName()).
 		Where("id = ? AND valid = ?", c.Id, "0").
 		Update(map[string]interface{}{
-		"password": Tools.MD5(data.Password),
-	}).RowsAffected
+			"password": Tools.MD5(data.Password),
+		}).RowsAffected
 
 	if rows <= 0 {
 		return false

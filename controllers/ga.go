@@ -1,16 +1,16 @@
 package controllers
 
 import (
-	"encoding/json"
-	"fmt"
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/models/redis"
 	"LianFaPhone/lfp-backend-api/services/account"
 	"LianFaPhone/lfp-backend-api/services/ga"
 	"LianFaPhone/lfp-backend-api/utils"
+	"encoding/json"
+	"fmt"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/kataras/iris"
 	"time"
-	apibackend "LianFaPhone/lfp-api/errdef"
 )
 
 type (
@@ -42,7 +42,7 @@ func (this *GA) Bind(ctx iris.Context) {
 	_, err = redis.RedisClient.Set(this.generate(user.Id), gas.Secret, this.Config.System.GaExpire*time.Second).Result()
 	if err != nil {
 		l4g.Error("RedisClient username[%s]user[%v] err[%s]", utils.GetValueUserName(ctx), user, err.Error())
-		ctx.JSON(Response{Code: apibackend.BASERR_DATABASE_ERROR.Code() , Message: err.Error()})
+		ctx.JSON(Response{Code: apibackend.BASERR_DATABASE_ERROR.Code(), Message: err.Error()})
 		return
 	}
 

@@ -1,9 +1,9 @@
 package aws
 
 import (
+	"LianFaPhone/lfp-backend-api/api-common"
 	"bytes"
 	"fmt"
-	"LianFaPhone/lfp-backend-api/api-common"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/aws/aws-sdk-go/aws"
 	"github.com/aws/aws-sdk-go/aws/credentials"

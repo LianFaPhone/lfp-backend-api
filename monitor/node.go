@@ -2,9 +2,9 @@ package monitor
 
 import (
 	"LianFaPhone/bas-monitor/common"
-	"LianFaPhone/bas-monitor/rpc"
 	"LianFaPhone/bas-monitor/defaultrpc"
 	"LianFaPhone/bas-monitor/logger"
+	"LianFaPhone/bas-monitor/rpc"
 	"fmt"
 	l4g "github.com/alecthomas/log4go"
 )
@@ -49,7 +49,7 @@ func NewNode(cfg *common.ConfigNode, meta string) (*rpc.Node, error) {
 	return nodeInst, nil
 }
 
-func BeginNodeMonitor()  {
+func BeginNodeMonitor() {
 	initCaller()
 	initNotifier()
 }

@@ -1,9 +1,9 @@
 package rbac
 
 import (
-	"sort"
 	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/services/access"
+	"sort"
 	"strconv"
 )
 
@@ -18,7 +18,7 @@ func (this *VerifyAccess) SearchUserPertainAccess(userAccess []*models.Access) [
 	data := make([]*models.Access, 0)
 
 	var parentIds []string
-	for _, v := range userAccess{
+	for _, v := range userAccess {
 		data = append(data, v)
 		if v.ParentId > -1 {
 			parentIds = append(Tools.Unique(parentIds), strconv.FormatInt(v.ParentId, 10))
