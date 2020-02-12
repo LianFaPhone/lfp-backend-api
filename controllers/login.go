@@ -1,18 +1,18 @@
 package controllers
 
 import (
-	"encoding/json"
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/api-common"
 	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/models/redis"
 	"LianFaPhone/lfp-backend-api/services/account"
 	"LianFaPhone/lfp-backend-api/utils"
+	"encoding/json"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/asaskevich/govalidator"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/core/errors"
 	"time"
-	apibackend "LianFaPhone/lfp-api/errdef"
 )
 
 type Login struct {
@@ -91,6 +91,7 @@ func (this *Login) Login(ctx iris.Context) {
 		return
 	}
 
+	user.IsGauth = true
 	_, err = redis.RedisClient.Set(user.Token, body, this.Config.System.Expire*time.Second).Result()
 	if err != nil {
 		l4g.Error("RedisClient username[%s]user[%v] err[%s]", utils.GetValueUserName(ctx), user, err.Error())

@@ -1,14 +1,15 @@
 package controllers
 
 import (
-	"fmt"
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/tools"
+	"fmt"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/kataras/iris"
 	"net/http"
 	"net/http/httputil"
 	"net/url"
-	apibackend "LianFaPhone/lfp-api/errdef"
+	"LianFaPhone/lfp-backend-api/utils"
 )
 
 type ProxyController struct {
@@ -17,11 +18,11 @@ type ProxyController struct {
 }
 
 func (this *ProxyController) Proxy(ctx iris.Context) {
-	toPath := this.CfgProxy.ToPrefix + "/"+ctx.Params().Get("param")
+	toPath := this.CfgProxy.ToPrefix + "/" + ctx.Params().Get("param")
 
 	remote, err := url.Parse(this.CfgProxy.ToHost + toPath)
 	if err != nil {
-		l4g.Error(fmt.Errorf("url[%s] parse err: %v", this.CfgProxy.ToHost + toPath, err))
+		l4g.Error(fmt.Errorf("url[%s] parse err: %v", this.CfgProxy.ToHost+toPath, err))
 		ctx.JSON(Response{Code: apibackend.BASERR_INTERNAL_CONFIG_ERROR.Code(), Message: err.Error()})
 		return
 	}
@@ -31,11 +32,18 @@ func (this *ProxyController) Proxy(ctx iris.Context) {
 		req.URL.Scheme = remote.Scheme
 		req.URL.Host = remote.Host
 		req.URL.Path = toPath
+		userid := fmt.Sprintf("%d", utils.NewUtils().GetValueUserId(ctx))
 		if targetQuery == "" || req.URL.RawQuery == "" {
 			req.URL.RawQuery = targetQuery + req.URL.RawQuery
 		} else {
 			req.URL.RawQuery = targetQuery + "&" + req.URL.RawQuery
 		}
+		acc,_ := utils.NewUtils().GetValueUserInfo(ctx)
+		if acc != nil && acc.Extend != nil{
+			req.URL.RawQuery +=  "&extend=" + *acc.Extend
+		}
+
+		req.URL.RawQuery += "&userid="+userid
 
 		if _, ok := req.Header["User-Agent"]; !ok {
 			// explicitly disable User-Agent so it's not set to default value

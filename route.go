@@ -3,10 +3,10 @@ package main
 import (
 	"LianFaPhone/lfp-backend-api/controllers"
 	"LianFaPhone/lfp-backend-api/tools"
+	"github.com/alecthomas/log4go"
 	"github.com/go-redis/redis"
 	"github.com/kataras/iris"
 	"strings"
-	"github.com/alecthomas/log4go"
 )
 
 type (
@@ -41,19 +41,19 @@ func (this *Service) routes() {
 			accountParty.Get("/search", accounts.Search)
 			accountParty.Get("/user-info", accounts.GetUserInfo)
 			accountParty.Get("/batch-user-by-ids", accounts.BatchUserByIds)
-			accountParty.Put("/update", accounts.Update)
+			accountParty.Post("/update", accounts.Update)
 			accountParty.Put("/disabled", accounts.Disabled)
 			accountParty.Put("/set-admin", accounts.SetAdmin)
 			accountParty.Put("/before-change-password", accounts.ChangeBeforePassword)
 			accountParty.Put("/after-change-password", accounts.ChangeAfterPassword)
 			accountParty.Put("/change-user-password", accounts.ChangeUserPassword)
-			accountParty.Delete("/delete", accounts.Delete)
+			accountParty.Post("/delete", accounts.Delete)
 
 			login := controllers.Login{}
 			login.Config = this.Config
 
 			accountParty.Post("/login", login.Login)
-			accountParty.Delete("/logout", login.Logout)
+			accountParty.Post("/logout", login.Logout)
 		}
 
 		accessParty := v1.Party("/access")
@@ -62,8 +62,8 @@ func (this *Service) routes() {
 
 			accessParty.Post("/add-access", access.AddAccess)
 			accessParty.Get("/search", access.Search)
-			accessParty.Delete("/delete", access.Delete)
-			accessParty.Put("/update", access.Update)
+			accessParty.Post("/delete", access.Delete)
+			accessParty.Post("/update", access.Update)
 			accessParty.Get("/search-user-pertain-access", access.SearchUserPertainAccess)
 		}
 
@@ -73,11 +73,12 @@ func (this *Service) routes() {
 
 			roleParty.Post("/add-role", role.AddRule)
 			roleParty.Get("/search", role.Search)
-			roleParty.Delete("/delete", role.Delete)
-			roleParty.Put("/update", role.Update)
-			roleParty.Put("/disabled", role.Disabled)
+			roleParty.Post("/delete", role.Delete)
+			roleParty.Post("/update", role.Update)
+			roleParty.Post("/disabled", role.Disabled)
 		}
 
+		//没用到user-role
 		userRoleParty := v1.Party("/user-role")
 		{
 			userRole := controllers.UserRole{}
@@ -109,7 +110,6 @@ func (this *Service) routes() {
 			logParty.Get("/login", logCtrl.GetLoginLog)
 			logParty.Get("/safe", logCtrl.GetOperationLog)
 		}
-
 
 		//这个接口以后优化
 		//upFile := controllers.NewUploadFile(this.Config)
@@ -144,7 +144,7 @@ func (this *Service) routes() {
 			log4go.Info("proxy[%s] [%v]", srcPrefix, *proxy)
 			proxyParty := v1.Party(srcPrefix)
 			{
-				proxyController := controllers.ProxyController{CfgProxy:proxy}
+				proxyController := controllers.ProxyController{CfgProxy: proxy}
 				proxyController.Config = this.Config
 				proxyParty.Any("/{param:path}", proxyController.Proxy)
 			}
@@ -158,6 +158,5 @@ func (this *Service) routes() {
 		//	proxyParty.Any("/{param:path}", proxyController.Proxy2)
 		//}
 	}
-
 
 }

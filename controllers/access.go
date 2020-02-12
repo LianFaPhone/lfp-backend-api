@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/services/access"
 	"LianFaPhone/lfp-backend-api/services/rbac"
@@ -8,7 +9,6 @@ import (
 	l4g "github.com/alecthomas/log4go"
 	"github.com/asaskevich/govalidator"
 	"github.com/kataras/iris"
-	apibackend "LianFaPhone/lfp-api/errdef"
 )
 
 type Access struct {

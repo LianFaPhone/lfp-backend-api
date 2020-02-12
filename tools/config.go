@@ -6,40 +6,40 @@ import (
 	l4g "github.com/alecthomas/log4go"
 	"gopkg.in/yaml.v2"
 	"io/ioutil"
-	"time"
 	"strings"
+	"time"
 )
 
 type (
 	Config struct {
-		System      System             `yaml:"system"`
-		Mysql       Mysql              `yaml:"mysql"`
-		Redis       Redis              `yaml:"redis"`
+		System System `yaml:"system"`
+		Mysql  Mysql  `yaml:"mysql"`
+		Redis  Redis  `yaml:"redis"`
 		//Wallet      bastionpay.Gateway `yaml:"wallet"`
-		WalletPaths []string           `yaml:"wallet_paths"`
-		BasAmin     BasAmin            `yaml:"bas_admin"`
-		CoinMarket  CoinMarket         `yaml:"coin_market"`
-		BasQuote    BasQuote           `yaml:"bas_quote"`
-		Monitor     Monitor            `yaml:"monitor"`
-		Aws         Aws                `yaml:"aws"`
-		Notify      Notify             `yaml:"notify"`
-		IpFind      IpFind             `yaml:"ip_find"`
-		OperateLog  OperateLog         `yaml:"operate_log"`
-		BasMonitor struct {
+		WalletPaths []string   `yaml:"wallet_paths"`
+		BasAmin     BasAmin    `yaml:"bas_admin"`
+		CoinMarket  CoinMarket `yaml:"coin_market"`
+		BasQuote    BasQuote   `yaml:"bas_quote"`
+		Monitor     Monitor    `yaml:"monitor"`
+		Aws         Aws        `yaml:"aws"`
+		Notify      Notify     `yaml:"notify"`
+		IpFind      IpFind     `yaml:"ip_find"`
+		OperateLog  OperateLog `yaml:"operate_log"`
+		BasMonitor  struct {
 			Version string   `yaml:"version"`
 			Name    string   `yaml:"name"`
 			Tag     string   `yaml:"tag"`
 			RpcAddr string   `yaml:"rpc_addr"`
 			Env     []string `yaml:"env"`
 		} `yaml:"bas_monitor"`
-		VipSys      VipSys             `yaml:"vipsys"`
-		ProxyList   []*Proxy `yaml:"proxy"`
-		RecordLogs  []*RecordLog `yaml:"record_log"`
+		VipSys        VipSys                `yaml:"vipsys"`
+		ProxyList     []*Proxy              `yaml:"proxy"`
+		RecordLogs    []*RecordLog          `yaml:"record_log"`
 		RecordLogsMap map[string]*RecordLog `yaml:"-"`
 	}
 
 	Proxy struct {
-		SrcPrefix    string `yaml:"src_prefix"`
+		SrcPrefix string `yaml:"src_prefix"`
 		ToHost    string `yaml:"to_host"`
 		ToPrefix  string `yaml:"to_prefix"`
 	}
@@ -122,27 +122,27 @@ type (
 		Addr       string   `yaml:"addr"`
 	}
 	IpFind struct {
-		Auth string  `yaml:"auth"`
+		Auth string `yaml:"auth"`
 	}
-	OperateLog struct{
-		RemainDays  int64    `yaml:"remain_days"`
-		CleanIntvl  int    `yaml:"clean_interval"`
+	OperateLog struct {
+		RemainDays int64 `yaml:"remain_days"`
+		CleanIntvl int   `yaml:"clean_interval"`
 	}
 	VipSys struct {
-		Addr string  `yaml:"addr"`
+		Addr string `yaml:"addr"`
 	}
-	MarketFissionApi struct{
-		Addr string  `yaml:"addr"`
+	MarketFissionApi struct {
+		Addr string `yaml:"addr"`
 	}
-	MarketLuckDrawApi struct{
-		Addr string  `yaml:"addr"`
+	MarketLuckDrawApi struct {
+		Addr string `yaml:"addr"`
 	}
 
-	RecordLog struct{
-		Path      string `yaml:"path"`
-		Method    string `yaml:"method"`
-		EnName    string `yaml:"en_name"`
-		ZhName    string `yaml:"zh_name"`
+	RecordLog struct {
+		Path   string `yaml:"path"`
+		Method string `yaml:"method"`
+		EnName string `yaml:"en_name"`
+		ZhName string `yaml:"zh_name"`
 	}
 )
 
@@ -162,7 +162,7 @@ func Analyze(configPath string) *Config {
 		time.Sleep(time.Second * 1)
 	}
 	config.RecordLogsMap = make(map[string]*RecordLog)
-	for i:=0; i < len(config.RecordLogs); i++ {
+	for i := 0; i < len(config.RecordLogs); i++ {
 		if len(config.RecordLogs[i].Path) <= 1 {
 			continue
 		}

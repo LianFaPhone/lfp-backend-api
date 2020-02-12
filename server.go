@@ -1,10 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"LianFaPhone/lfp-backend-api/api-common/logrus"
 	"LianFaPhone/lfp-backend-api/models"
 	rd "LianFaPhone/lfp-backend-api/models/redis"
+	"fmt"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/kataras/iris"
 	"github.com/robfig/cron"
@@ -16,7 +16,6 @@ func (this *Service) Run() {
 	address := fmt.Sprintf("%s:%d",
 		this.Config.System.Host,
 		this.Config.System.Port)
-
 
 	orm := models.New(&this.Config.Mysql).Connection()
 

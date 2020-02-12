@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/models/redis"
 	"LianFaPhone/lfp-backend-api/services/account"
@@ -11,7 +12,7 @@ import (
 	"net/http"
 	"strings"
 	"time"
-	apibackend "LianFaPhone/lfp-api/errdef"
+	"math/rand"
 )
 
 type (
@@ -39,12 +40,12 @@ func (this *Verify) VerifyAccess(ctx iris.Context) {
 	}
 	l4g.Debug("username[%s] user[%v] path[%s]", utils.GetValueUserName(ctx), user, ctx.Path())
 
-	if user != nil &&
+	if  false && user != nil &&
 		user.GoogleSecret != "" &&
 		!user.IsGauth && !this.checkGA(ctx.Path()) {
-		ctx.JSON(Response{Code: apibackend.BASERR_UNKNOWN_BUG.Code(), Message:"need GA"})
-//		this.Status(ctx, http.StatusPreconditionFailed)
-		l4g.Error("StatusPreconditionFailed username[%s] user[%v] path[%s] token[%s] err", utils.GetValueUserName(ctx), user, ctx.Path(),ctx.GetHeader("token"))
+		ctx.JSON(Response{Code: apibackend.BASERR_UNKNOWN_BUG.Code(), Message: "need GA"})
+		//		this.Status(ctx, http.StatusPreconditionFailed)
+		l4g.Error("StatusPreconditionFailed username[%s] user[%v] path[%s] token[%s] err", utils.GetValueUserName(ctx), user, ctx.Path(), ctx.GetHeader("token"))
 		return
 	}
 
@@ -63,8 +64,9 @@ func (this *Verify) VerifyAccess(ctx iris.Context) {
 		return
 	}
 
-	redis.RedisClient.Expire(ctx.GetHeader("token"), this.Config.System.Expire*time.Second)
-
+	if rand.Intn(100) == 3 {
+		redis.RedisClient.Expire(ctx.GetHeader("token"), this.Config.System.Expire*time.Second)
+	}
 	verifyAccess.UserId = user.Id
 	verifyAccess.RoleId = user.RoleId //$单角色专用
 
@@ -78,7 +80,7 @@ func (this *Verify) VerifyAccess(ctx iris.Context) {
 	err = verifyAccess.GetUserAccessList()
 	if err != nil {
 		ctx.JSON(Response{Code: apibackend.BASERR_DATABASE_ERROR.Code(), Message: err.Error()})
-//		this.Status(ctx, http.StatusForbidden)
+		//		this.Status(ctx, http.StatusForbidden)
 		l4g.Error("StatusForbidden username[%s] verifyAccess[%v] err[%s]", utils.GetValueUserName(ctx), verifyAccess, err.Error())
 		return
 	}

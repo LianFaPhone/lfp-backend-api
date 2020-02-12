@@ -27,18 +27,11 @@ func (this *AccessList) Tree2(list []*models.Access) []*models.Access {
 //}
 
 //将
-func (this *AccessList) buildData2(list []*models.Access) []*models.Access{
-   data := []*models.Access{}
-
-
-
+func (this *AccessList) buildData2(list []*models.Access) []*models.Access {
+	data := []*models.Access{}
 
 	return []*models.Access{}
 }
-
-
-
-
 
 func (this *AccessList) makeTreeCore2(index int64, data map[int64]map[int64]*models.Access) []*models.Access {
 	tmp := make([]*models.Access, 0)

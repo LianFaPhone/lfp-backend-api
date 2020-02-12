@@ -1,14 +1,14 @@
 package controllers
 
 import (
-	"encoding/json"
+	apibackend "LianFaPhone/lfp-api/errdef"
 	"LianFaPhone/lfp-backend-api/tools"
 	"LianFaPhone/lfp-backend-api/utils"
+	"encoding/json"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/kataras/iris"
 	"io/ioutil"
 	"net/http"
-	apibackend "LianFaPhone/lfp-api/errdef"
 )
 
 type AdminResponse struct {
@@ -36,10 +36,10 @@ type RedirectController struct {
 }
 
 type ResNotifyMsg struct {
-	Err            *int             `json:"err,omitempty"`
-	ErrMsg         *string          `json:"errmsg,omitempty"`
-	TemplateGroupList interface{}      `json:"templategrouplist,omitempty"`
-	Templates      interface{}      `json:"template,omitempty"`
+	Err                 *int        `json:"err,omitempty"`
+	ErrMsg              *string     `json:"errmsg,omitempty"`
+	TemplateGroupList   interface{} `json:"templategrouplist,omitempty"`
+	Templates           interface{} `json:"template,omitempty"`
 	TemplateHistoryList interface{} `json:"templatehistorylist,omitempty"`
 }
 
@@ -52,7 +52,7 @@ func (this *ResNotifyMsg) GetErr() int {
 
 func (this *ResNotifyMsg) GetErrMsg() string {
 	if this.ErrMsg == nil {
-		return  ""
+		return ""
 	}
 	return *this.ErrMsg
 }
@@ -61,7 +61,7 @@ func (bp *RedirectController) HandlerV1BasNotify(ctx iris.Context) {
 	query := ctx.Request().URL.RawQuery
 	newUrl := bp.config.Notify.Addr + ctx.Path()
 	if len(query) != 0 {
-		newUrl =newUrl + "?" + query
+		newUrl = newUrl + "?" + query
 	}
 	req, err := http.NewRequest(ctx.Method(), newUrl, ctx.Request().Body)
 	if err != nil {
@@ -88,7 +88,7 @@ func (bp *RedirectController) HandlerV1BasNotify(ctx iris.Context) {
 	content, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		l4g.Error("Body readAll username[%s] err[%s]", utils.GetValueUserName(ctx), err.Error())
-		ctx.JSON(&Response{Code: apibackend.BASERR_INTERNAL_SERVICE_ACCESS_ERROR.Code(), Message: "BASNOTIFY_READ_BODY_ERROR:"+ err.Error()})
+		ctx.JSON(&Response{Code: apibackend.BASERR_INTERNAL_SERVICE_ACCESS_ERROR.Code(), Message: "BASNOTIFY_READ_BODY_ERROR:" + err.Error()})
 		return
 	}
 	defer resp.Body.Close()

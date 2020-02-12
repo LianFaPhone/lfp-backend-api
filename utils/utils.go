@@ -1,12 +1,12 @@
 package utils
 
 import (
-	"errors"
 	"LianFaPhone/lfp-backend-api/models"
-	"github.com/kataras/iris"
-	"sync"
-	"runtime/debug"
+	"errors"
 	"github.com/alecthomas/log4go"
+	"github.com/kataras/iris"
+	"runtime/debug"
+	"sync"
 )
 
 type (
@@ -64,6 +64,6 @@ func GetValueUserName(ctx iris.Context) string {
 
 func PanicPrint() {
 	if err := recover(); err != nil {
-		log4go.Error("panic err[%v] stack[\n%v\n]" ,err, string(debug.Stack()))
+		log4go.Error("panic err[%v] stack[\n%v\n]", err, string(debug.Stack()))
 	}
 }

@@ -2,8 +2,8 @@ package redis
 
 import (
 	"LianFaPhone/lfp-backend-api/tools"
-	"github.com/go-redis/redis"
 	"fmt"
+	"github.com/go-redis/redis"
 )
 
 type (

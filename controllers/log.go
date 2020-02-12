@@ -10,8 +10,8 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/middleware/i18n"
-	"time"
 	"strings"
+	"time"
 )
 
 var GLogController LogController
@@ -39,16 +39,13 @@ func (l *LogController) Start() {
 	if CleanIntvl < 3600 {
 		CleanIntvl = 3600
 	}
-    for {
+	for {
 		l.logModel.DeleteLoginLog(l.config.OperateLog.RemainDays)
 		l.logModel.DeleteOperatLog(l.config.OperateLog.RemainDays)
 		time.Sleep(time.Second * time.Duration(CleanIntvl))
 	}
 
 }
-
-
-
 
 func (l *LogController) RecodeLog(ctx iris.Context) {
 	var (
@@ -72,7 +69,7 @@ func (l *LogController) RecodeLog(ctx iris.Context) {
 			return
 		}
 		go l.RecodeLoginLog(userId, ip, "web")
-	}else{
+	} else {
 		userId = uint(utils.NewUtils().GetValueUserId(ctx))
 		if userId <= 0 {
 			return

@@ -1,9 +1,9 @@
 package models
 
 import (
-	"fmt"
 	"LianFaPhone/lfp-backend-api/api-common"
 	"LianFaPhone/lfp-backend-api/tools"
+	"fmt"
 	l4g "github.com/alecthomas/log4go"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
@@ -102,7 +102,6 @@ func (this *Model) BatchInsert(table string, fields, values []string) *gorm.DB {
 	sql = sql + strSql
 	return DB.Exec(sql)
 }
-
 
 func (d *MysqlConfig) updateTimeStampForCreateCallback(scope *gorm.Scope) {
 	if !scope.HasError() {

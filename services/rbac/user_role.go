@@ -1,12 +1,12 @@
 package rbac
 
 import (
+	"LianFaPhone/lfp-backend-api/api-common"
+	"LianFaPhone/lfp-backend-api/models"
 	"LianFaPhone/lfp-backend-api/services/account"
 	"errors"
-	"LianFaPhone/lfp-backend-api/models"
-	"strconv"
 	"fmt"
-	"LianFaPhone/lfp-backend-api/api-common"
+	"strconv"
 )
 
 type (
@@ -118,7 +118,7 @@ func (this *UserRole) ColumnRoleKey(list []*models.Role) []string {
 func (this *UserRoleList) SearchUserRole() (*common.Result, error) {
 	var list []SearchUserRole
 	var tatal int64
-	query := models.DB.Table(new(models.UserRole).TableName() + " a").
+	query := models.DB.Table(new(models.UserRole).TableName()+" a").
 		Select("a.*, b.name").
 		Where("a.valid = ?", "0")
 

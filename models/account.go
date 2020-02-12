@@ -13,6 +13,7 @@ type (
 		RoleId       int64  `json:"role_id" gorm:"column:role_id"`
 		IsAdmin      int    `json:"is_admin" gorm:"column:is_admin"`
 		Status       int    `json:"status" gorm:"column:status"`
+		Extend       *string    `json:"extend" gorm:"column:extend"`
 		IsGauth      bool   `json:"is_gauth" gorm:"-"`
 		Token        string `json:"token" gorm:"-"`
 		Model
