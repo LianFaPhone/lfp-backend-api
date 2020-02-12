@@ -25,7 +25,7 @@ func (this *Service) routes() {
 	verify := controllers.Verify{}
 	verify.Config = this.Config
 
-	redirectC := controllers.NewRedirectController(this.Config)
+	//redirectC := controllers.NewRedirectController(this.Config)
 
 	var logCtrl = controllers.NewLogController(this.Config)
 
