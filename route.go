@@ -127,10 +127,10 @@ func (this *Service) routes() {
 		//	fileParty.Post("/task/update", upFile.UpdateStatus)
 		//}
 
-		notifyPy := v1.Party("/notify")
-		{ //做代理功能，用Any
-			notifyPy.Any("/{param:path}", redirectC.HandlerV1BasNotify)
-		}
+		//notifyPy := v1.Party("/notify")
+		//{ //做代理功能，用Any
+		//	notifyPy.Any("/{param:path}", redirectC.HandlerV1BasNotify)
+		//}
 		//fissioPy := v1.Party("/fissionshare")
 		//{ //做代理功能，用Any
 		//	fissioPy.Any("/{param:path}", redirectC.HandlerV1Fission)
