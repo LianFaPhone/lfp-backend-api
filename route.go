@@ -38,16 +38,19 @@ func (this *Service) routes() {
 			accounts := controllers.Account{}
 
 			accountParty.Post("/register", accounts.Register)
-			accountParty.Get("/search", accounts.Search)
+			accountParty.Any("/search", accounts.Search)
 			accountParty.Get("/user-info", accounts.GetUserInfo)
 			accountParty.Get("/batch-user-by-ids", accounts.BatchUserByIds)
-			accountParty.Post("/update", accounts.Update)
+			accountParty.Any("/update", accounts.Update)
+
 			accountParty.Put("/disabled", accounts.Disabled)
-			accountParty.Put("/set-admin", accounts.SetAdmin)
+			accountParty.Any("/set-admin", accounts.SetAdmin)
 			accountParty.Put("/before-change-password", accounts.ChangeBeforePassword)
 			accountParty.Put("/after-change-password", accounts.ChangeAfterPassword)
 			accountParty.Put("/change-user-password", accounts.ChangeUserPassword)
-			accountParty.Post("/delete", accounts.Delete)
+
+			accountParty.Any("/delete", accounts.Delete)
+
 
 			login := controllers.Login{}
 			login.Config = this.Config
@@ -72,10 +75,12 @@ func (this *Service) routes() {
 			role := controllers.Role{}
 
 			roleParty.Post("/add-role", role.AddRule)
+
 			roleParty.Get("/search", role.Search)
 			roleParty.Post("/delete", role.Delete)
 			roleParty.Post("/update", role.Update)
 			roleParty.Post("/disabled", role.Disabled)
+
 		}
 
 		//没用到user-role
