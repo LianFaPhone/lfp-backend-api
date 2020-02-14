@@ -109,7 +109,7 @@ func (this *AccessList) Search() (*common.Result, error) {
 		return nil, err
 	}
 
-	result := this.Tree(list)
+	result := this.Tree2(list)
 	sort.Sort(AccessListSort(result))
 
 	return new(common.Result).PageResult(result, total, this.Page, this.Size)
