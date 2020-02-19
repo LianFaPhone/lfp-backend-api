@@ -5,6 +5,7 @@ import (
 	"LianFaPhone/lfp-backend-api/tools"
 	"github.com/alecthomas/log4go"
 	"github.com/go-redis/redis"
+	"github.com/iris-contrib/middleware/cors"
 	"github.com/kataras/iris"
 	"strings"
 )
@@ -19,6 +20,14 @@ type (
 
 func (this *Service) routes() {
 	this.App = iris.New()
+	
+	crs := cors.New(cors.Options{
+		AllowedOrigins:   []string{"*"},
+		AllowedMethods:   []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"},
+		AllowedHeaders:   []string{"*" /*,"Access-Control-Allow-Origin","Authorization", "X-Requested-With", "X_Requested_With", "Content-Type", "Access-Token", "Accept-Language", "Api-Key", "Req-Real-Ip"*/},
+		//ExposedHeaders:   []string{"Access-Control-Allow-Origin"},
+		AllowCredentials: true,
+	})
 
 	this.App.Any("/", new(controllers.Index).Index)
 
@@ -29,7 +38,7 @@ func (this *Service) routes() {
 
 	var logCtrl = controllers.NewLogController(this.Config)
 
-	v1 := this.App.Party("/v1/bk", verify.VerifyAccess)
+	v1 := this.App.Party("/v1/bk", crs, verify.VerifyAccess)
 	v1.Done(logCtrl.RecodeLog)
 
 	{
