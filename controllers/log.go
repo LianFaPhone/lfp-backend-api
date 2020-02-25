@@ -48,6 +48,7 @@ func (l *LogController) Start() {
 }
 
 func (l *LogController) RecodeLog(ctx iris.Context) {
+	return
 	var (
 		path   string
 		userId uint
