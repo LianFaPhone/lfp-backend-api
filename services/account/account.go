@@ -6,11 +6,14 @@ import (
 	"LianFaPhone/lfp-backend-api/models/redis"
 	"encoding/json"
 	"errors"
+	//uuid "github.com/iris-contrib/go.uuid"
+
+	//uuid "github.com/iris-contrib/go.uuid"
+	"github.com/satori/go.uuid"
 	"strings"
 	"time"
 	//"LianFaPhone/lfp-backend-api/services/access"
 	"fmt"
-	"github.com/satori/go.uuid"
 	"strconv"
 )
 
@@ -117,6 +120,8 @@ type (
 		Status       int    `json:"status"`
 		CreatedAt    string `json:"created_at"`
 		UpdatedAt    string `json:"updated_at"`
+		RoleName    *string `json:"role_name,omitempty"  gorm:"-"`
+		Label    *string `json:"label,omitempty"  gorm:"-"`
 	}
 )
 

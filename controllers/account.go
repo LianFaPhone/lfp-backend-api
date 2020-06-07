@@ -9,6 +9,7 @@ import (
 	l4g "github.com/alecthomas/log4go"
 	"github.com/asaskevich/govalidator"
 	"github.com/kataras/iris"
+	"LianFaPhone/lfp-backend-api/services/rbac"
 )
 
 type Account struct {
@@ -393,6 +394,15 @@ func (this *Account) GetUserInfo(ctx iris.Context) {
 		l4g.Error("GetUserInfo username[%s] params[%v] err[%s]", utils.GetValueUserName(ctx), params, err.Error())
 		ctx.JSON(Response{Code: apibackend.BASERR_DATABASE_ERROR.Code(), Message: err.Error()})
 		return
+	}
+
+	roleparam := rbac.Role{Id: result.RoleId}
+	roleInfo, err := roleparam.GetRoleInfoById()
+	if err != nil {
+		l4g.Error("roleparam.GetRoleInfoById err[%s]",err.Error())
+	}else{
+		result.RoleName = &roleInfo.Name
+		result.Label = &roleInfo.Label
 	}
 
 	switch true {

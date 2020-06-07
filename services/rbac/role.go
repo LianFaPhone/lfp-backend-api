@@ -12,6 +12,7 @@ type (
 		Id     int64  `valid:"optional" json:"id"`
 		Name   string `valid:"required" json:"name"`
 		Status int64  `valid:"optional" json:"status"`
+		Label    string `valid:"optional" json:"label"`
 	}
 
 	RoleList struct {
@@ -30,6 +31,7 @@ type (
 		Id     int64  `valid:"required" json:"id"`
 		Name   string `valid:"optional" json:"name"`
 		Status int64  `valid:"optional" json:"status"`
+		Label    string `valid:"optional" json:"label"`
 	}
 )
 
@@ -37,6 +39,7 @@ func (this *Role) AddRole() (*models.Role, error) {
 	rule := &models.Role{
 		Name:   this.Name,
 		Status: this.Status,
+		Label:  this.Label,
 	}
 
 	result, _ := this.GetRoleByName()

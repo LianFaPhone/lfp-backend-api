@@ -12,6 +12,7 @@ import (
 	"github.com/asaskevich/govalidator"
 	"github.com/kataras/iris"
 	"github.com/kataras/iris/core/errors"
+	"LianFaPhone/lfp-backend-api/services/rbac"
 	"time"
 )
 
@@ -81,6 +82,15 @@ func (this *Login) Login(ctx iris.Context) {
 		l4g.Error("checkLogin username[%s] user[%v] err[%s]", utils.GetValueUserName(ctx), user, err.Error())
 		ctx.JSON(Response{Code: apibackend.BASERR_INCORRECT_PWD.Code(), Message: err.Error()})
 		return
+	}
+
+	roleparam := rbac.Role{Id: user.RoleId}
+	roleInfo, err := roleparam.GetRoleInfoById()
+	if err != nil {
+		l4g.Error("roleparam.GetRoleInfoById err[%s]",err.Error())
+	}else{
+		user.RoleName = &roleInfo.Name
+		user.Label = &roleInfo.Label
 	}
 
 	user.Token = Tools.GenerateUserLoginToken(user.Id)

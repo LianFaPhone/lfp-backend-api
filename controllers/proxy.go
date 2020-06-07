@@ -39,11 +39,14 @@ func (this *ProxyController) Proxy(ctx iris.Context) {
 			req.URL.RawQuery = targetQuery + "&" + req.URL.RawQuery
 		}
 		acc,_ := utils.NewUtils().GetValueUserInfo(ctx)
-		if acc != nil && acc.Extend != nil{
-			req.URL.RawQuery +=  "&extend=" + *acc.Extend
+		if acc != nil {
+			if acc.Extend != nil{
+				req.URL.RawQuery +=  "&extend=" + *acc.Extend
+			}
+			if acc.RoleId == 23 {
+				req.URL.RawQuery += "&limit_userid="+userid
+			}
 		}
-
-		req.URL.RawQuery += "&userid="+userid
 
 		if _, ok := req.Header["User-Agent"]; !ok {
 			// explicitly disable User-Agent so it's not set to default value

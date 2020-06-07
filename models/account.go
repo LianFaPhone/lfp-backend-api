@@ -16,6 +16,8 @@ type (
 		Extend       *string    `json:"extend" gorm:"column:extend"`
 		IsGauth      bool   `json:"is_gauth" gorm:"-"`
 		Token        string `json:"token" gorm:"-"`
+		RoleName    *string `json:"role_name,omitempty"  gorm:"-"`
+		Label       *string `json:"label,omitempty"  gorm:"-"`
 		Model
 	}
 )
