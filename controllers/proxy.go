@@ -32,7 +32,6 @@ func (this *ProxyController) Proxy(ctx iris.Context) {
 		req.URL.Scheme = remote.Scheme
 		req.URL.Host = remote.Host
 		req.URL.Path = toPath
-		userid := fmt.Sprintf("%d", utils.NewUtils().GetValueUserId(ctx))
 		if targetQuery == "" || req.URL.RawQuery == "" {
 			req.URL.RawQuery = targetQuery + req.URL.RawQuery
 		} else {
@@ -44,6 +43,7 @@ func (this *ProxyController) Proxy(ctx iris.Context) {
 				req.URL.RawQuery +=  "&extend=" + *acc.Extend
 			}
 			if acc.RoleId == 23 {
+				userid := fmt.Sprintf("%d", acc.Id)
 				req.URL.RawQuery += "&limit_userid="+userid
 			}
 		}

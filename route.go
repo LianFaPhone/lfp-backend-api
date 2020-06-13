@@ -53,7 +53,7 @@ func (this *Service) routes() {
 			accountParty.Get("/batch-user-by-ids", accounts.BatchUserByIds)
 			accountParty.Any("/update", accounts.Update)
 
-			accountParty.Put("/disabled", accounts.Disabled)
+			accountParty.Any("/disabled", accounts.Disabled)
 			accountParty.Any("/set-admin", accounts.SetAdmin)
 			accountParty.Put("/before-change-password", accounts.ChangeBeforePassword)
 			accountParty.Put("/after-change-password", accounts.ChangeAfterPassword)
