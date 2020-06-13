@@ -378,16 +378,17 @@ func (this *Account) BatchUserByIds(ctx iris.Context) {
 
 func (this *Account) GetUserInfo(ctx iris.Context) {
 	l4g.Debug("start deal GetUserInfo username[%s]", utils.GetValueUserName(ctx))
+
 	params := account.UserInfo{
-		Id: Tools.ParseInt(ctx.FormValue("id"), 0),
+		Id: utils.NewUtils().GetValueUserId(ctx),
 	}
-	l4g.Debug("username[%s] params[%v]", utils.GetValueUserName(ctx), params)
-	isBool, err := govalidator.ValidateStruct(params)
-	if err != nil && !isBool {
-		l4g.Error("ValidateStruct username[%s] params[%v] err[%s]", utils.GetValueUserName(ctx), params, err.Error())
-		ctx.JSON(Response{Code: apibackend.BASERR_INVALID_PARAMETER.Code(), Message: err.Error()})
-		return
-	}
+	//l4g.Debug("username[%s] params[%v]", utils.GetValueUserName(ctx), params)
+	//isBool, err := govalidator.ValidateStruct(params)
+	//if err != nil && !isBool {
+	//	l4g.Error("ValidateStruct username[%s] params[%v] err[%s]", utils.GetValueUserName(ctx), params, err.Error())
+	//	ctx.JSON(Response{Code: apibackend.BASERR_INVALID_PARAMETER.Code(), Message: err.Error()})
+	//	return
+	//}
 
 	result, err := params.GetUserInfo()
 	if err != nil {

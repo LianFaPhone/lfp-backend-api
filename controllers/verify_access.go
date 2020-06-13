@@ -63,7 +63,7 @@ func (this *Verify) VerifyAccess(ctx iris.Context) {
 	//	return
 	//}
 
-	if rand.Intn(100) == 3 {
+	if rand.Intn(10) == 3 {
 		redis.RedisClient.Expire(ctx.GetHeader("token"), this.Config.System.Expire*time.Second)
 	}
 
