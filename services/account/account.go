@@ -9,6 +9,8 @@ import (
 	//uuid "github.com/iris-contrib/go.uuid"
 
 	//uuid "github.com/iris-contrib/go.uuid"
+
+	//uuid "github.com/iris-contrib/go.uuid"
 	"github.com/satori/go.uuid"
 	"strings"
 	"time"
@@ -209,7 +211,7 @@ func (this *AccountUpdate) UpdateUserInfo() (*models.Account, error) {
 	if err != nil {
 		return nil, err
 	}
-
+	user.Status = this.Status
 	if this.Name != "" {
 		user.Name = this.Name
 	}
